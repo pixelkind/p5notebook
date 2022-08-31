@@ -1,0 +1,13 @@
+,
+    "notebookRenderer": [
+      {
+        "id": "io.garrit.p5notebook",
+        "displayName": "p5.js",
+        "mimeTypes": [
+          "text/p5js",
+          "text/html",
+          "text/plain"
+        ],
+        "entrypoint": "./out/client/index.js"
+      }
+    ]
