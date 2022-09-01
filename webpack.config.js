@@ -55,6 +55,17 @@ const makeConfig = (argv, { entry, out, target, library = "commonjs" }) => ({
           },
         ],
       },
+      {
+        test: /\.txt$/i,
+        use: [
+          {
+            loader: "raw-loader",
+            options: {
+              esModule: false,
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
