@@ -20,6 +20,7 @@ __webpack_public_path__ = new URL(
 export const activate: ActivationFunction = (context) => {
   return {
     renderOutputItem(outputItem, element) {
+      element.id = "output";
       let shadow = element.shadowRoot;
       if (!shadow) {
         shadow = element.attachShadow({ mode: "open" });

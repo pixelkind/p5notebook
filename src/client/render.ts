@@ -22,11 +22,22 @@ export function render({ container, mime, value }: IRenderInfo) {
   p5container.innerText = "placeholder";
   container.appendChild(p5container);
 
+  const canvas = document.createElement("canvas");
+  canvas.id = "canvas";
+  canvas.setAttribute("style", "width: 200px; height: 200px;");
+  container.appendChild(canvas);
+
   const script = document.createElement("script");
-  script.type = "module";
+  // script.type = "module";
   // script.type = "text/javascript";
-  script.innerHTML = `${p5string}\n${value}`;
+  script.innerHTML = `${value}\n\n${p5string}`;
   container.appendChild(script);
+
+  // const script = document.createElement("script");
+  // // script.type = "module";
+  // // script.type = "text/javascript";
+  // script.innerHTML = `${value}`;
+  // container.appendChild(script);
 
   const pre = document.createElement("pre");
   pre.classList.add(style.json);
