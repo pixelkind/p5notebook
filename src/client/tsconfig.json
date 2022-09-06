@@ -6,7 +6,8 @@
     "rootDir": ".",
     "module": "commonjs",
     "lib": ["ES2019", "dom"],
-    "types": ["webpack-env", "vscode-notebook-renderer"]
+    "types": ["webpack-env", "vscode-notebook-renderer"],
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["*.txt"]
 }

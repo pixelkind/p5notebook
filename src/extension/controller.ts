@@ -26,6 +26,7 @@ export class Controller {
     _notebook: vscode.NotebookDocument,
     _controller: vscode.NotebookController
   ): void {
+    console.log("EXECUTE", cells.length);
     for (let cell of cells) {
       this._doExecution(cell);
     }
