@@ -7,7 +7,6 @@ export class Controller {
   readonly supportedLanguages = ["javascript"];
 
   private readonly _controller: vscode.NotebookController;
-  private _executionOrder = 0;
 
   constructor() {
     this._controller = vscode.notebooks.createNotebookController(
@@ -17,7 +16,7 @@ export class Controller {
     );
 
     this._controller.supportedLanguages = this.supportedLanguages;
-    this._controller.supportsExecutionOrder = true;
+    this._controller.supportsExecutionOrder = false;
     this._controller.executeHandler = this._execute.bind(this);
   }
 
@@ -26,30 +25,31 @@ export class Controller {
     _notebook: vscode.NotebookDocument,
     _controller: vscode.NotebookController
   ): void {
-    console.log("EXECUTE", cells.length);
-    for (let cell of cells) {
-      this._doExecution(cell);
+    const allCells = _notebook.getCells();
+    let code = "";
+    for (let cell of allCells) {
+      if (cell.kind === 2) {
+        code += cell.document.getText() + "\n";
+      }
+      if (
+        cells.find((element) => {
+          return element === cell;
+        })
+      ) {
+        this._doExecution(cell, code);
+      }
     }
   }
 
-  private _doExecution(cell: vscode.NotebookCell) {
+  private _doExecution(cell: vscode.NotebookCell, code: string) {
     const execution = this._controller.createNotebookCellExecution(cell);
-    execution.executionOrder = ++this._executionOrder;
     execution.start(Date.now());
 
-    // const output = eval(cell.document.getText());
-    const text = cell.document.getText();
-    console.log(text);
-    console.log(this._executionOrder);
+    //use ESLint before executing, otherwise show error message
 
     execution.replaceOutput([
       new vscode.NotebookCellOutput([
-        vscode.NotebookCellOutputItem.text(text, "text/p5js"),
-        vscode.NotebookCellOutputItem.text(
-          `<html><body><div></div><script>${text}</script></body></html>`,
-          "text/html"
-        ),
-        vscode.NotebookCellOutputItem.text(text, "text/plain"),
+        vscode.NotebookCellOutputItem.text(code, "text/p5js"),
       ]),
     ]);
     execution.end(true, Date.now());

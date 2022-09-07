@@ -34,9 +34,7 @@ export function render({ container, mime, value }: IRenderInfo) {
   iroot.appendChild(script);
 
   iframe.srcdoc = iroot.innerHTML;
-  console.log(iframe.srcdoc);
   container.appendChild(iframe);
-  // iframe.querySelector("body").style.margin = "0px";
 }
 
 if (module.hot) {
