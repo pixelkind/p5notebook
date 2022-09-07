@@ -1,7 +1,6 @@
 import { render } from "./render";
 import errorOverlay from "vscode-notebook-error-overlay";
 import type { ActivationFunction } from "vscode-notebook-renderer";
-import { v4 as uuidv4 } from "uuid";
 
 // Fix the public path so that any async import()'s work as expected.
 declare const __webpack_relative_entrypoint_to_root__: string;
@@ -21,7 +20,6 @@ __webpack_public_path__ = new URL(
 export const activate: ActivationFunction = (context) => {
   return {
     renderOutputItem(outputItem, element) {
-      element.id = uuidv4().toString();
       let shadow = element.shadowRoot;
       if (!shadow) {
         shadow = element.attachShadow({ mode: "open" });
@@ -39,7 +37,6 @@ export const activate: ActivationFunction = (context) => {
           container: node,
           mime: outputItem.mime,
           value: outputItem.text(),
-          containerId: element.id,
           context,
         });
       });
