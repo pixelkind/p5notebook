@@ -1,27 +1,24 @@
-# p5js-notebook
+# p5.js Notebook
 
-⚠️ Work-in-progress starter code for custom notebook renderers in VS Code. Expect this to change as notebooks matures. ⚠️
+With the p5.js Notebook extension for Visual Studio Code you can create notebooks in Visual Studio Code that run p5.js code.
 
-This starter includes:
+After installing the extension you can create a new file with the file-ending `.p5js` and start working in your notebook.
 
- - 🖥️ TypeScript code to create a simple `NotebookOutputRenderer`
- - 📦 A Webpack build for renderer client code
- - ⚡ Support for hot module reloading and safe boilerplate
- - 🎨 CSS modules support
+## How does it work?
 
-### Running this Sample
+A notebook documents works like JavaScript code that is executed in a HTML file. That means, you cannot redefine variables in the file and you can override functions and variables in code cells later on.
 
- 1. `code-insiders p5js-notebook`: Open the folder in VS Code Insiders
- 1. Hit `F5` to build+debug
+If you execute a specific cell, all cells upon to this cell will be executed but not further. That means it works differently compared to regular Jupyter notebooks where you can run cells in any order and execute a single cell only.
 
-### Structure
+## Features
 
-A Notebook Renderer consists of code that runs in the VS Code Extension Host (Node.js), which registers the renderer and passes data into the UI code running inside a WebView (Browser/DOM).
+## Release notes
 
-This uses TypeScript project references. There are three projects in the `src` directory:
+### Version 0.1.0
 
- - `extension` contains the code running in Node.js extension host. It's compiled with `tsc`.
- - `client` is the UI code, built by Webpack, with access to the DOM.
- - `common` contains code shared between the extension and client.
+- Initial release
+- You can run JavaScript code in cells that use the p5.js library
 
-When you run `watch`, `compile`, or `dev`, we invoke both `tsc` and `webpack` to compile the extension and the client portion of the code.
+## License
+
+This Library is licensed under the MIT License. Please refer to the LICENSE.txt for more information.

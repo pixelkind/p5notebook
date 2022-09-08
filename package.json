@@ -2,16 +2,23 @@
   "name": "p5js-notebook",
   "displayName": "p5.js Notebook",
   "description": "Notebook for p5.js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.67.0"
   },
   "keywords": [
     "notebookRenderer",
     "p5.js",
-    "visual programming"
+    "visual programming",
+    "creative coding",
+    "teaching",
+    "notebook",
+    "education"
   ],
   "categories": [
+    "Education",
+    "Notebooks",
+    "Visualization",
     "Other"
   ],
   "activationEvents": [
@@ -74,5 +81,23 @@
     "vscode-notebook-error-overlay": "^1.0.1",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixelkind/p5notebook"
+  },
+  "bugs": {
+    "url": "https://github.com/pixelkind/p5notebook/issues"
+  },
+  "contributors": [
+    {
+      "name": "Garrit Schaap",
+      "url": "https://github.com/pixelkind"
+    }
+  ],
+  "author": {
+    "name": "Garrit Schaap",
+    "url": "https://github.com/pixelkind"
   }
 }
