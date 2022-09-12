@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { JSHINT } from "jshint";
 
 export class Controller {
   readonly controllerId = "p5js-notebook-controller";
@@ -45,13 +46,29 @@ export class Controller {
     const execution = this._controller.createNotebookCellExecution(cell);
     execution.start(Date.now());
 
-    //use ESLint before executing, otherwise show error message
+    let options = {
+      esversion: 6,
+    };
+    JSHINT(code, options);
+    let errors = JSHINT.errors;
+    if (errors.length === 0) {
+      execution.replaceOutput([
+        new vscode.NotebookCellOutput([
+          vscode.NotebookCellOutputItem.text(code, "text/p5js"),
+        ]),
+      ]);
+    } else {
+      let message = "Errors:\n";
+      errors.forEach((element: any) => {
+        message += `Line ${element.line}, col ${element.character}: ${element.reason}\n`;
+      });
+      execution.replaceOutput([
+        new vscode.NotebookCellOutput([
+          vscode.NotebookCellOutputItem.text(message),
+        ]),
+      ]);
+    }
 
-    execution.replaceOutput([
-      new vscode.NotebookCellOutput([
-        vscode.NotebookCellOutputItem.text(code, "text/p5js"),
-      ]),
-    ]);
     execution.end(true, Date.now());
   }
 
