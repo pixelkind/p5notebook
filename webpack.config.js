@@ -19,7 +19,9 @@ const makeConfig = (argv, { entry, out, target, library = "commonjs" }) => ({
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".css"],
-    fallback: { util: require.resolve("util/") },
+    fallback: {
+      util: require.resolve("util/"),
+    },
   },
   experiments: {
     outputModule: library === "module" ? true : false,
