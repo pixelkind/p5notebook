@@ -13,22 +13,36 @@ interface IRenderInfo {
 
 // This function is called to render your contents.
 export function render({ container, mime, value }: IRenderInfo) {
+  const startCreateCanvasIndex = value.search("createCanvas(") + 13; // + function name and bracket
+  const endCreateCanvasIndex = value.indexOf(")", startCreateCanvasIndex);
+  const sizeString = value.substr(startCreateCanvasIndex, endCreateCanvasIndex - startCreateCanvasIndex);
+  let sizeArray = sizeString.split(",");
+  if (sizeArray[0] === "innerWidth" || sizeArray[0] === "outerWidth") {
+    sizeArray[0] = "100%";
+  }
+  if (sizeArray[1] === "innerHeight" || sizeArray[1] === "outerHeight") {
+    sizeArray[1] = "300px";
+  }
+
   const iframe = document.createElement("iframe");
-  iframe.width = "100%";
-  iframe.height = "300px";
+  // iframe.width = "100%";
+  // iframe.height = "300px";
+  iframe.width = sizeArray[0];
+  iframe.height = sizeArray[1];
   iframe.style.border = "none";
   iframe.style.margin = "0px";
   iframe.style.padding = "0px";
   const iroot = document.createElement("div");
 
-  const precode = `
+  const postcode = `
   window.addEventListener("load", () => {
     document.querySelector("body").style.margin = "0px auto";
+    document.querySelector("body").style.lineHeight = "0px";
   });
   `;
   const script = document.createElement("script");
   // script.type = "module";
-  script.innerHTML = `${precode}\n\n${value}\n\n${p5string}`;
+  script.innerHTML = `${value}\n\n${p5string}\n\n${postcode}`;
   script.style.margin = "0px";
   iroot.appendChild(script);
 
