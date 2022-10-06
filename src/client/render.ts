@@ -13,9 +13,12 @@ interface IRenderInfo {
 
 // This function is called to render your contents.
 export function render({ container, mime, value }: IRenderInfo) {
-  const startCreateCanvasIndex = value.search("createCanvas(") + 13; // + function name and bracket
+  const startCreateCanvasIndex = value.search("createCanvas") + 13; // + function name and bracket
   const endCreateCanvasIndex = value.indexOf(")", startCreateCanvasIndex);
-  const sizeString = value.substr(startCreateCanvasIndex, endCreateCanvasIndex - startCreateCanvasIndex);
+  const sizeString = value.substr(
+    startCreateCanvasIndex,
+    endCreateCanvasIndex - startCreateCanvasIndex
+  );
   let sizeArray = sizeString.split(",");
   if (sizeArray[0] === "innerWidth" || sizeArray[0] === "outerWidth") {
     sizeArray[0] = "100%";
