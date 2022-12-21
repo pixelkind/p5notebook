@@ -59,3 +59,36 @@ if (module.hot) {
     // can use this to clean up or stash any state.
   });
 }
+
+/*
+function sendLog(message: string, type: string) {
+  api.postMessage({ command: "log", message: message, type: type });
+}
+
+function addLog(msg: any, type: string) {
+  if (typeof msg === "object") {
+    msg = JSON.stringify(msg, null, 4);
+  }
+
+  sendLog(msg, type);
+}
+
+window.console.log = (msg) => {
+  addLog(msg, "log");
+};
+window.console.debug = (msg) => {
+  addLog(msg, "debug");
+};
+window.console.error = (msg) => {
+  addLog(msg, "error");
+};
+window.console.info = (msg) => {
+  addLog(msg, "info");
+};
+window.console.trace = (msg) => {
+  addLog(msg, "trace");
+};
+window.console.warn = (msg) => {
+  addLog(msg, "warn");
+};
+*/
