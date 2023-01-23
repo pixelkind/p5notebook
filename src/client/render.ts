@@ -38,14 +38,71 @@ export function render({ container, mime, value }: IRenderInfo) {
   iframe.style.border = "none";
   iframe.style.margin = "0px";
   iframe.style.padding = "0px";
+  iframe.style.overflow = "hidden";
   const iroot = document.createElement("div");
   iroot.style.lineHeight = "0px";
+  iroot.style.overflow = "hidden";
 
   const heightContainer = document.createElement("div");
   //heightContainer.style.height = sizeArray[1];
   heightContainer.style.overflow = "hidden";
   heightContainer.style.display = "flex";
+  heightContainer.style.lineHeight = "0px";
   heightContainer.style.flexDirection = "column";
+
+  const p5container = document.createElement("div");
+  p5container.id = "p5container";
+  //p5container.style.position = "absolute";
+  //p5container.innerText = "CONTAINER";
+  heightContainer.appendChild(p5container);
+
+  const logElement = document.createElement("code");
+  logElement.id = "p5log";
+  logElement.style.marginTop = "1em";
+  logElement.style.padding = "0.4em";
+  logElement.style.height = "calc(100px - 2em)";
+  logElement.style.overflow = "auto";
+  logElement.style.backgroundColor = "#1C2127";
+  logElement.style.color = "#ADBAC7";
+  logElement.style.lineHeight = "1.2em";
+  heightContainer.appendChild(logElement);
+
+  const precode = `
+  function addLog(msg, type) {
+    if (msg.indexOf('You just changed the value of "createCanvas", which was a p5 function.') === 0) {
+      return;
+    }
+    const logElement = document.getElementById("p5log");
+    if (logElement) {
+      if (msg.indexOf('\\n🌸 p5.js says:') === 0) {
+        logElement.innerHTML += "CHANGE ";
+        const info = msg.substring(msg.indexOf("["), msg.indexOf("]") + 2);
+        msg = msg.replace(info, "");
+      }
+      logElement.innerHTML += msg + "<br>";
+      logElement.scrollTop = logElement.scrollHeight;
+    }
+  }
+
+  window.console.log = (msg) => {
+    addLog(msg, "log");
+  };
+  window.console.debug = (msg) => {
+    addLog(msg, "debug");
+  };
+  window.console.error = (msg) => {
+    addLog(msg, "error");
+  };
+  window.console.info = (msg) => {
+    addLog(msg, "info");
+  };
+  window.console.trace = (msg) => {
+    addLog(msg, "trace");
+  };
+  window.console.warn = (msg) => {
+    addLog(msg, "warn");
+  };
+  `;
 
   const postcode = `
   function p5setup() {
@@ -67,77 +124,17 @@ export function render({ container, mime, value }: IRenderInfo) {
     document.querySelector("body").style.margin = "0px auto";
     //document.querySelector("body").style.lineHeight = "0px";
   });
-
-  function sendLog(message, type) {
-    const logElement = document.getElementById("p5log");
-    logElement.innerHTML += message + "<br>";
-    logElement.scrollTop = logElement.scrollHeight;
-  }
-  
-  function addLog(msg, type) {
-    if (typeof msg === "object") {
-      msg = JSON.stringify(msg, null, 4);
-    }
-  
-    sendLog(msg, type);
-  }
-  
-  window.console.log = (msg) => {
-    addLog(msg, "log");
-  };
-  window.console.debug = (msg) => {
-    addLog(msg, "debug");
-  };
-  window.console.error = (msg) => {
-    addLog(msg, "error");
-  };
-  window.console.info = (msg) => {
-    addLog(msg, "info");
-  };
-  window.console.trace = (msg) => {
-    addLog(msg, "trace");
-  };
-  window.console.warn = (msg) => {
-    addLog(msg, "warn");
-  };
   `;
   const script = document.createElement("script");
-  script.innerHTML = `${value}\n\n${p5string}\n\n${postcode}`;
+  script.innerHTML = `${precode}\n\n${value}\n\n${p5string}\n\n${postcode}`;
   script.style.margin = "0px";
+  script.style.lineHeight = "0px";
+  script.defer = true;
   heightContainer.appendChild(script);
-
-  const p5container = document.createElement("div");
-  p5container.id = "p5container";
-  //p5container.style.position = "absolute";
-  //p5container.innerText = "CONTAINER";
-  heightContainer.appendChild(p5container);
-
-  const logElement = document.createElement("code");
-  logElement.id = "p5log";
-  logElement.style.height = "100px";
-  logElement.style.overflow = "auto";
-  heightContainer.appendChild(logElement);
 
   iroot.appendChild(heightContainer);
   iframe.srcdoc = iroot.innerHTML;
   container.appendChild(iframe);
-
-  const log = document.createElement("code");
-  log.id = "p5log";
-  log.className = "log";
-  container.appendChild(log);
-
-  const logScript = document.createElement("script");
-  logScript.innerHTML = `
-  window.addEventListener("message", (event) => {
-    const data = event.data;
-    if (data.type === "p5log") {
-      console.log(event.data.message);
-    }
-  });
-  `;
-  logScript.style.margin = "0px";
-  container.appendChild(logScript);
 }
 
 if (module.hot) {

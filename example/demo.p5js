@@ -17,6 +17,6 @@
   {
     "kind": 2,
     "language": "javascript",
-    "value": "let a = 0;\nfunction draw() {\n  background(255, 0, 255);\n  ellipse(100, 100 + Math.sin(a) * 20, 20);\n  rect(100, 100);\n  console.log(\"Hello \" + a);\n\n  a += 0.5;\n}"
+    "value": "let a = 0;\nconsole.log(\"Hello\");\nconsole.log(\"World\");\nfunction draw() {\n  background(255, 0, 255);\n  ellipse(100, 100 + Math.sin(a) * 20, 20);\n  rect(100, 100);\n  // console.log(\"Hello \" + a);\n\n  a += 0.5;\n}\n\n// function mouseClicked() {\n//   console.log(\"Hello\");\n// }"
   }
 ]
