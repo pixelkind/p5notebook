@@ -3,6 +3,7 @@
   "displayName": "p5.js Notebook",
   "description": "Notebook for p5.js",
   "version": "0.1.0",
+  "publisher": "garrit",
   "icon": "icon.png",
   "engines": {
     "vscode": "^1.74.0"
