@@ -23,6 +23,7 @@
     "Other"
   ],
   "activationEvents": [
+    "onCommand:p5notebook.new",
     "onNotebook:p5notebook"
   ],
   "main": "./out/extension/extension.js",
@@ -48,6 +49,12 @@
           "text/p5js"
         ],
         "entrypoint": "./out/client/index.js"
+      }
+    ],
+    "commands": [
+      {
+        "title": "New p5.js Notebook",
+        "command": "p5notebook.new"
       }
     ]
   },

@@ -11,6 +11,26 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.registerNotebookSerializer("p5notebook", new Serializer()),
     new Controller()
   );
+  context.subscriptions.push(
+    vscode.commands.registerCommand("p5notebook.new", async () => {
+      const newNotebook = await vscode.workspace.openNotebookDocument(
+        "p5notebook",
+        new vscode.NotebookData([
+          new vscode.NotebookCellData(
+            vscode.NotebookCellKind.Markup,
+            "# Welcome to your p5.js Notebook",
+            "markdown"
+          ),
+          new vscode.NotebookCellData(
+            vscode.NotebookCellKind.Code,
+            "function setup() {\n  window.createCanvas(200, 200);\n}",
+            "javascript"
+          ),
+        ])
+      );
+      await vscode.window.showNotebookDocument(newNotebook);
+    })
+  );
 }
 
 // This method is called when your extension is deactivated
