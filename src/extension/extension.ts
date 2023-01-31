@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
           ),
           new vscode.NotebookCellData(
             vscode.NotebookCellKind.Code,
-            "function setup() {\n  window.createCanvas(200, 200);\n}",
+            "function setup() {\n  createCanvas(200, 200);\n}",
             "javascript"
           ),
         ])

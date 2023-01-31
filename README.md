@@ -18,6 +18,10 @@ Alternatively you can create a new file and use the file-ending _.p5js_. Visual 
 
 ## Release notes
 
+### Version 0.1.1
+
+- Bugfix: Console didn't work with other types except of strings
+
 ### Version 0.1.0
 
 - Initial release

@@ -2,7 +2,7 @@
   "name": "p5js-notebook",
   "displayName": "p5.js Notebook",
   "description": "A notebook extension for p5.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "garrit",
   "icon": "icon.png",
   "engines": {

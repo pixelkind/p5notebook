@@ -69,13 +69,12 @@ export function render({ container, mime, value }: IRenderInfo) {
 
   const precode = `
   function addLog(msg, type) {
-    if (msg.indexOf('You just changed the value of "createCanvas", which was a p5 function.') === 0) {
+    if (typeof(msg) === "string" && msg.indexOf('You just changed the value of "createCanvas", which was a p5 function.') === 0) {
       return;
     }
     const logElement = document.getElementById("p5log");
     if (logElement) {
-      if (msg.indexOf('\\n🌸 p5.js says:') === 0) {
-        logElement.innerHTML += "CHANGE ";
+      if (typeof(msg) === "string" && msg.indexOf('\\n🌸 p5.js says:') === 0) {
         const info = msg.substring(msg.indexOf("["), msg.indexOf("]") + 2);
         msg = msg.replace(info, "");
       }
@@ -143,36 +142,3 @@ if (module.hot) {
     // can use this to clean up or stash any state.
   });
 }
-
-/*
-function sendLog(message: string, type: string) {
-  api.postMessage({ command: "log", message: message, type: type });
-}
-
-function addLog(msg: any, type: string) {
-  if (typeof msg === "object") {
-    msg = JSON.stringify(msg, null, 4);
-  }
-
-  sendLog(msg, type);
-}
-
-window.console.log = (msg) => {
-  addLog(msg, "log");
-};
-window.console.debug = (msg) => {
-  addLog(msg, "debug");
-};
-window.console.error = (msg) => {
-  addLog(msg, "error");
-};
-window.console.info = (msg) => {
-  addLog(msg, "info");
-};
-window.console.trace = (msg) => {
-  addLog(msg, "trace");
-};
-window.console.warn = (msg) => {
-  addLog(msg, "warn");
-};
-*/
